@@ -4,6 +4,10 @@ public class Item {
     private String itemName;
     private int quantity;
     
+    @Override
+    public String toString() {
+        return "Item [itemName=" + itemName + ", quantity=" + quantity + "]";
+    }
     public String getItemName() {
         return itemName;
     }

@@ -1,8 +1,12 @@
 package ssf.day17.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,4 +54,35 @@ public class OrderController {
         return ResponseEntity.ok(resp.toString());
     }
 
+    // GET /orders
+    // Accept: text/csv
+    @GetMapping(path="/orders", produces = "text/csv")
+    public ResponseEntity<String> getOrders() {
+
+        String csv = orderSvc.getOrders();
+
+        // Response: 200 OK
+        // Content-Type: text/csv
+        // csv:
+        // orderID
+        // <orderID>
+        // ...
+        return ResponseEntity.ok(csv);
+    }
+
+    // GET /order/{id}      // orderID exist ? 200 : 404
+    // Return JSON object
+    @GetMapping(path="/order/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getOrderByID(@PathVariable String id) {
+        Optional<String> optOrder = orderSvc.getOrderByID(id);
+        
+        // Response: 404
+        if(optOrder.isEmpty()) 
+            return ResponseEntity.notFound().build();
+
+        // Response: 200 OK
+        // Content-Type: application/json
+        // {order}
+        return ResponseEntity.ok(optOrder.get());
+    }
 }

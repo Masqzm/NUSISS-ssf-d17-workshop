@@ -1,5 +1,7 @@
 package ssf.day17.repositories;
 
+import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +31,22 @@ public class OrderRepository {
         ValueOperations<String, String> valueOps = template.opsForValue();
 
         valueOps.set(orderID, json);
+    }
+
+    // GET keys *
+    public Set<String> getOrders() {
+        return template.keys("*");
+    }
+
+    // GET <orderID>
+    public Optional<String> getOrderByID(String orderID) {
+        ValueOperations<String, String> valueOps = template.opsForValue();
+
+        String order = valueOps.get(orderID);
+
+        if(order == null)
+            return Optional.empty();
+        
+        return Optional.of(order);
     }
 }

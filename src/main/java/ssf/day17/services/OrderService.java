@@ -1,5 +1,7 @@
 package ssf.day17.services;
 
+import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +23,24 @@ public class OrderService {
         orderRepo.insertOrder(orderID, json);
 
         return orderID;
+    }
+
+    public String getOrders() {
+        StringBuilder csv = new StringBuilder();
+
+        // Add header
+        csv.append("orderID\n");
+
+        Set<String> orders = orderRepo.getOrders();
+
+        for(String order : orders) {
+            csv.append(order + "\n");
+        }
+
+        return csv.toString();
+    }
+
+    public Optional<String> getOrderByID(String orderID) {
+        return orderRepo.getOrderByID(orderID);
     }
 }
