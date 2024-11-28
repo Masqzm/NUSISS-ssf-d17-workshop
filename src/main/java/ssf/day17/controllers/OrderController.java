@@ -3,7 +3,6 @@ package ssf.day17.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,15 +35,15 @@ public class OrderController {
         System.out.printf("Order: %s\n", order);
 
         // Service to store order
-        String cartID = orderSvc.insertOrder(payload);
+        String orderID = orderSvc.insertOrder(payload);
 
         JsonObject resp = Json.createObjectBuilder()
-                        .add("orderId", cartID)
+                        .add("orderId", orderID)
                         .build();
 
         // Response: 202 Accepted
         // Content-Type: application/json
-        // Body: { "cartID":"<cartID>" }
+        // Body: { "orderId":"<orderID>" }
         // return ResponseEntity.accepted()
         //                     .body(resp.toString());
         // Response: 200 OK

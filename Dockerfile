@@ -24,6 +24,11 @@ RUN chmod a+x ./mvnw && ./mvnw package -Dmaven.test.skip=true
 #---------
 # For Railway
 ENV PORT=8080
+ENV SPRING_DATA_REDIS_HOST=localhost
+ENV SPRING_DATA_REDIS_PORT=6379
+ENV SPRING_DATA_REDIS_DATABASE=0
+ENV SPRING_DATA_REDIS_USERNAME=""
+ENV SPRING_DATA_REDIS_PASSWORD=""
 
 # Specify which port app needs
 #EXPOSE ${SERVER_PORT}
